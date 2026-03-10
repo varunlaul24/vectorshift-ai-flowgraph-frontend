@@ -1,35 +1,46 @@
 // textNode.js
 
-import { useState } from 'react';
-import { Handle, Position } from 'reactflow';
+import { BaseNode } from './BaseNode';
+import { buildNodeHandles } from './createNodeComponent';
+import { useStore } from '../store';
+
+const selector = (state) => ({
+  updateNodeField: state.updateNodeField,
+});
 
 export const TextNode = ({ id, data }) => {
-  const [currText, setCurrText] = useState(data?.text || '{{input}}');
-
-  const handleTextChange = (e) => {
-    setCurrText(e.target.value);
-  };
+  const { updateNodeField } = useStore(selector);
+  const text = data?.text ?? '{{input}}';
 
   return (
-    <div style={{width: 200, height: 80, border: '1px solid black'}}>
-      <div>
-        <span>Text</span>
-      </div>
-      <div>
-        <label>
-          Text:
-          <input 
-            type="text" 
-            value={currText} 
-            onChange={handleTextChange} 
-          />
-        </label>
-      </div>
-      <Handle
-        type="source"
-        position={Position.Right}
-        id={`${id}-output`}
-      />
-    </div>
+    <BaseNode
+      title="Text"
+      subtitle="Custom body example: freeform text node with a custom editor."
+      accent="#ec4899"
+      handles={buildNodeHandles({ id, outputs: [{ key: 'output' }] })}
+    >
+      <label className="node-field">
+        <span className="node-field__label">Text</span>
+        <textarea
+          className="node-field__control node-field__control--textarea"
+          value={text}
+          rows={4}
+          onChange={(event) => updateNodeField(id, 'text', event.target.value)}
+        />
+      </label>
+    </BaseNode>
   );
-}
+};
+
+export const textNodeDefinition = {
+  type: 'text',
+  label: 'Text',
+  description: 'Freeform text with custom rendering.',
+  accent: '#ec4899',
+  component: TextNode,
+  getInitialData: (id) => ({
+    id,
+    nodeType: 'text',
+    text: '{{input}}',
+  }),
+};

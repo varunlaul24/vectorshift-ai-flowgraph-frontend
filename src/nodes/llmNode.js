@@ -1,34 +1,23 @@
 // llmNode.js
 
-import { Handle, Position } from 'reactflow';
+import { createNodeComponent } from './createNodeComponent';
 
-export const LLMNode = ({ id, data }) => {
+export const LLMNode = createNodeComponent({
+  title: 'LLM',
+  subtitle: 'Generate a response from system and prompt inputs.',
+  accent: '#6366f1',
+  inputs: [{ key: 'system' }, { key: 'prompt' }],
+  outputs: [{ key: 'response' }],
+});
 
-  return (
-    <div style={{width: 200, height: 80, border: '1px solid black'}}>
-      <Handle
-        type="target"
-        position={Position.Left}
-        id={`${id}-system`}
-        style={{top: `${100/3}%`}}
-      />
-      <Handle
-        type="target"
-        position={Position.Left}
-        id={`${id}-prompt`}
-        style={{top: `${200/3}%`}}
-      />
-      <div>
-        <span>LLM</span>
-      </div>
-      <div>
-        <span>This is a LLM.</span>
-      </div>
-      <Handle
-        type="source"
-        position={Position.Right}
-        id={`${id}-response`}
-      />
-    </div>
-  );
-}
+export const llmNodeDefinition = {
+  type: 'llm',
+  label: 'LLM',
+  description: 'Run a large language model step.',
+  accent: '#6366f1',
+  component: LLMNode,
+  getInitialData: (id) => ({
+    id,
+    nodeType: 'llm',
+  }),
+};

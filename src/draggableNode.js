@@ -1,6 +1,6 @@
 // draggableNode.js
 
-export const DraggableNode = ({ type, label }) => {
+export const DraggableNode = ({ type, label, description, accent }) => {
     const onDragStart = (event, nodeType) => {
       const appData = { nodeType }
       event.target.style.cursor = 'grabbing';
@@ -10,23 +10,14 @@ export const DraggableNode = ({ type, label }) => {
   
     return (
       <div
-        className={type}
+        className="toolbar-node"
         onDragStart={(event) => onDragStart(event, type)}
         onDragEnd={(event) => (event.target.style.cursor = 'grab')}
-        style={{ 
-          cursor: 'grab', 
-          minWidth: '80px', 
-          height: '60px',
-          display: 'flex', 
-          alignItems: 'center', 
-          borderRadius: '8px',
-          backgroundColor: '#1C2536',
-          justifyContent: 'center', 
-          flexDirection: 'column'
-        }} 
+        style={{ '--node-accent': accent }}
         draggable
       >
-          <span style={{ color: '#fff' }}>{label}</span>
+          <span className="toolbar-node__label">{label}</span>
+          <span className="toolbar-node__description">{description}</span>
       </div>
     );
   };
