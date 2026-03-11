@@ -1,6 +1,6 @@
-import { createNodeComponent, getInitialDataFromFields } from './createNodeComponent';
-import { FIELD_TYPES, NODE_CATEGORIES } from './nodeSchema';
-import { NODE_ICONS } from './icons';
+import { createNodeComponent, getInitialDataFromFields } from '../factory/createNodeComponent';
+import { FIELD_TYPES, NODE_CATEGORIES } from '../nodeSchema';
+import { NODE_ICONS } from '../shared/icons';
 
 const fields = [
   {

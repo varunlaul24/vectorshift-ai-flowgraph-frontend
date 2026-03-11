@@ -1,12 +1,12 @@
-import { inputNodeDefinition } from './inputNode';
-import { llmNodeDefinition } from './llmNode';
-import { outputNodeDefinition } from './outputNode';
-import { textNodeDefinition } from './textNode';
-import { promptNodeDefinition } from './promptNode';
-import { apiNodeDefinition } from './apiNode';
-import { classifierNodeDefinition } from './classifierNode';
-import { mergeNodeDefinition } from './mergeNode';
-import { reviewNodeDefinition } from './reviewNode';
+import { inputNodeDefinition } from './definitions/inputNode';
+import { llmNodeDefinition } from './definitions/llmNode';
+import { outputNodeDefinition } from './definitions/outputNode';
+import { textNodeDefinition } from './definitions/textNode';
+import { promptNodeDefinition } from './definitions/promptNode';
+import { apiNodeDefinition } from './definitions/apiNode';
+import { classifierNodeDefinition } from './definitions/classifierNode';
+import { mergeNodeDefinition } from './definitions/mergeNode';
+import { reviewNodeDefinition } from './definitions/reviewNode';
 import { validateNodeDefinition } from './nodeSchema';
 
 const rawNodeRegistry = [

@@ -1,7 +1,7 @@
 import { Position } from 'reactflow';
-import { useStore } from '../store';
-import { BaseNode } from './BaseNode';
-import { FIELD_TYPES } from './nodeSchema';
+import { useStore } from '../../hooks/useStore';
+import { BaseNode } from '../shared/BaseNode';
+import { FIELD_TYPES } from '../nodeSchema';
 
 const selector = (state) => ({
   updateNodeField: state.updateNodeField,

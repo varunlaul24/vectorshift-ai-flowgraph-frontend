@@ -1,10 +1,10 @@
 // textNode.js
 
-import { BaseNode } from './BaseNode';
-import { buildNodeHandles } from './createNodeComponent';
-import { useStore } from '../store';
-import { NODE_CATEGORIES } from './nodeSchema';
-import { NODE_ICONS } from './icons';
+import { BaseNode } from '../shared/BaseNode';
+import { buildNodeHandles } from '../factory/createNodeComponent';
+import { useStore } from '../../hooks/useStore';
+import { NODE_CATEGORIES } from '../nodeSchema';
+import { NODE_ICONS } from '../shared/icons';
 
 const selector = (state) => ({
   updateNodeField: state.updateNodeField,

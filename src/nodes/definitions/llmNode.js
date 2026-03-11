@@ -1,8 +1,8 @@
 // llmNode.js
 
-import { createNodeComponent } from './createNodeComponent';
-import { NODE_CATEGORIES } from './nodeSchema';
-import { NODE_ICONS } from './icons';
+import { createNodeComponent } from '../factory/createNodeComponent';
+import { NODE_CATEGORIES } from '../nodeSchema';
+import { NODE_ICONS } from '../shared/icons';
 
 export const LLMNode = createNodeComponent({
   title: 'LLM',
