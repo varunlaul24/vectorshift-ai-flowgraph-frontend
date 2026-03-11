@@ -1,10 +1,12 @@
 import { createNodeComponent, getInitialDataFromFields } from './createNodeComponent';
+import { FIELD_TYPES, NODE_CATEGORIES } from './nodeSchema';
+import { NODE_ICONS } from './icons';
 
 const fields = [
   {
     key: 'strategy',
     label: 'Strategy',
-    type: 'select',
+    type: FIELD_TYPES.SELECT,
     defaultValue: 'Append',
     options: [
       { label: 'Append', value: 'Append' },
@@ -15,7 +17,7 @@ const fields = [
   {
     key: 'separator',
     label: 'Separator',
-    type: 'text',
+    type: FIELD_TYPES.TEXT,
     defaultValue: '\\n---\\n',
   },
 ];
@@ -32,6 +34,8 @@ export const MergeNode = createNodeComponent({
 export const mergeNodeDefinition = {
   type: 'merge',
   label: 'Merge',
+  category: NODE_CATEGORIES.UTILITIES,
+  icon: NODE_ICONS.MERGE,
   description: 'Combine multiple branches.',
   accent: '#f59e0b',
   component: MergeNode,

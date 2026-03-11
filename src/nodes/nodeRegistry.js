@@ -7,8 +7,9 @@ import { apiNodeDefinition } from './apiNode';
 import { classifierNodeDefinition } from './classifierNode';
 import { mergeNodeDefinition } from './mergeNode';
 import { reviewNodeDefinition } from './reviewNode';
+import { validateNodeDefinition } from './nodeSchema';
 
-export const nodeRegistry = [
+const rawNodeRegistry = [
   inputNodeDefinition,
   llmNodeDefinition,
   outputNodeDefinition,
@@ -20,6 +21,8 @@ export const nodeRegistry = [
   reviewNodeDefinition,
 ];
 
+export const nodeRegistry = rawNodeRegistry.filter(validateNodeDefinition);
+
 export const nodeTypes = Object.fromEntries(
   nodeRegistry.map((definition) => [definition.type, definition.component])
 );
@@ -27,6 +30,8 @@ export const nodeTypes = Object.fromEntries(
 export const toolbarNodes = nodeRegistry.map((definition) => ({
   type: definition.type,
   label: definition.label,
+  category: definition.category || 'General',
+  icon: definition.icon || '📦',
   description: definition.description,
   accent: definition.accent,
 }));

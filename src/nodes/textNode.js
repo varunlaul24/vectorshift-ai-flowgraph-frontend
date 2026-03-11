@@ -3,6 +3,8 @@
 import { BaseNode } from './BaseNode';
 import { buildNodeHandles } from './createNodeComponent';
 import { useStore } from '../store';
+import { NODE_CATEGORIES } from './nodeSchema';
+import { NODE_ICONS } from './icons';
 
 const selector = (state) => ({
   updateNodeField: state.updateNodeField,
@@ -35,6 +37,8 @@ export const TextNode = ({ id, data }) => {
 export const textNodeDefinition = {
   type: 'text',
   label: 'Text',
+  category: NODE_CATEGORIES.UTILITIES,
+  icon: NODE_ICONS.TEXT,
   description: 'Freeform text with custom rendering.',
   accent: '#ec4899',
   component: TextNode,

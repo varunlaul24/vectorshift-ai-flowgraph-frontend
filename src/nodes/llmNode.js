@@ -1,6 +1,8 @@
 // llmNode.js
 
 import { createNodeComponent } from './createNodeComponent';
+import { NODE_CATEGORIES } from './nodeSchema';
+import { NODE_ICONS } from './icons';
 
 export const LLMNode = createNodeComponent({
   title: 'LLM',
@@ -13,6 +15,8 @@ export const LLMNode = createNodeComponent({
 export const llmNodeDefinition = {
   type: 'llm',
   label: 'LLM',
+  category: NODE_CATEGORIES.AI,
+  icon: NODE_ICONS.LLM,
   description: 'Run a large language model step.',
   accent: '#6366f1',
   component: LLMNode,

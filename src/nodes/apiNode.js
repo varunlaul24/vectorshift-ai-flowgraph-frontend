@@ -1,10 +1,12 @@
 import { createNodeComponent, getInitialDataFromFields } from './createNodeComponent';
+import { FIELD_TYPES, NODE_CATEGORIES } from './nodeSchema';
+import { NODE_ICONS } from './icons';
 
 const fields = [
   {
     key: 'method',
     label: 'Method',
-    type: 'select',
+    type: FIELD_TYPES.SELECT,
     defaultValue: 'POST',
     options: [
       { label: 'GET', value: 'GET' },
@@ -15,7 +17,7 @@ const fields = [
   {
     key: 'endpoint',
     label: 'Endpoint',
-    type: 'text',
+    type: FIELD_TYPES.TEXT,
     defaultValue: 'https://api.example.com/run',
   },
 ];
@@ -32,6 +34,8 @@ export const ApiNode = createNodeComponent({
 export const apiNodeDefinition = {
   type: 'apiRequest',
   label: 'API',
+  category: NODE_CATEGORIES.INTEGRATION,
+  icon: NODE_ICONS.API,
   description: 'Call external services.',
   accent: '#f97316',
   component: ApiNode,

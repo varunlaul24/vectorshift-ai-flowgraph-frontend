@@ -1,6 +1,7 @@
 import { Position } from 'reactflow';
 import { useStore } from '../store';
 import { BaseNode } from './BaseNode';
+import { FIELD_TYPES } from './nodeSchema';
 
 const selector = (state) => ({
   updateNodeField: state.updateNodeField,
@@ -14,11 +15,9 @@ export const getFieldDefaultValue = (field, context) => {
   if (field.defaultValue !== undefined) {
     return getResolvedValue(field.defaultValue, context);
   }
-
-  if (field.type === 'select' && field.options?.length) {
+  if (field.type === FIELD_TYPES.SELECT && field.options?.length) {
     return field.options[0].value;
   }
-
   return '';
 };
 
@@ -33,16 +32,15 @@ const buildHandleStyle = (index, total) => {
   if (total <= 1) {
     return undefined;
   }
-
   return {
     top: `${((index + 1) / (total + 1)) * 100}%`,
   };
 };
 
-const buildSideHandles = (items, position, id, type) => {
+const buildSideHandles = (items, position, id) => {
   return items.map((item, index) => ({
     id: `${id}-${item.key}`,
-    type,
+    type: item.type || (position === Position.Left ? 'target' : 'source'),
     position,
     style: {
       ...buildHandleStyle(index, items.length),
@@ -51,15 +49,25 @@ const buildSideHandles = (items, position, id, type) => {
   }));
 };
 
-export const buildNodeHandles = ({ id, inputs = [], outputs = [] }) => {
+export const buildNodeHandles = ({ id, inputs = [], outputs = [], customHandles = null }) => {
+  if (customHandles) {
+    const leftItems = customHandles.filter(h => h.position === Position.Left || h.position === 'left');
+    const rightItems = customHandles.filter(h => h.position === Position.Right || h.position === 'right');
+    
+    return [
+      ...buildSideHandles(leftItems, Position.Left, id),
+      ...buildSideHandles(rightItems, Position.Right, id),
+    ];
+  }
+
   return [
-    ...buildSideHandles(inputs, Position.Left, id, 'target'),
-    ...buildSideHandles(outputs, Position.Right, id, 'source'),
+    ...buildSideHandles(inputs, Position.Left, id),
+    ...buildSideHandles(outputs, Position.Right, id),
   ];
 };
 
 const FieldControl = ({ field, value, onChange }) => {
-  if (field.type === 'select') {
+  if (field.type === FIELD_TYPES.SELECT) {
     return (
       <select className="node-field__control" value={value} onChange={onChange}>
         {field.options.map((option) => (
@@ -71,7 +79,7 @@ const FieldControl = ({ field, value, onChange }) => {
     );
   }
 
-  if (field.type === 'textarea') {
+  if (field.type === FIELD_TYPES.TEXTAREA) {
     return (
       <textarea
         className="node-field__control node-field__control--textarea"
@@ -86,7 +94,7 @@ const FieldControl = ({ field, value, onChange }) => {
   return (
     <input
       className="node-field__control"
-      type={field.type || 'text'}
+      type={field.type || FIELD_TYPES.TEXT}
       value={value}
       onChange={onChange}
       placeholder={field.placeholder}

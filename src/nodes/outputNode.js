@@ -1,18 +1,20 @@
 // outputNode.js
 
 import { createNodeComponent, getInitialDataFromFields } from './createNodeComponent';
+import { FIELD_TYPES, NODE_CATEGORIES } from './nodeSchema';
+import { NODE_ICONS } from './icons';
 
 const fields = [
   {
     key: 'outputName',
     label: 'Name',
-    type: 'text',
+    type: FIELD_TYPES.TEXT,
     defaultValue: ({ id }) => id.replace('customOutput-', 'output_'),
   },
   {
     key: 'outputType',
     label: 'Type',
-    type: 'select',
+    type: FIELD_TYPES.SELECT,
     defaultValue: 'Text',
     options: [
       { label: 'Text', value: 'Text' },
@@ -32,6 +34,8 @@ export const OutputNode = createNodeComponent({
 export const outputNodeDefinition = {
   type: 'customOutput',
   label: 'Output',
+  category: NODE_CATEGORIES.IO,
+  icon: NODE_ICONS.OUTPUT,
   description: 'Expose a result from the flow.',
   accent: '#22c55e',
   component: OutputNode,

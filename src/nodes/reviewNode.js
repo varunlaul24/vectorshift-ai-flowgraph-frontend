@@ -1,10 +1,12 @@
 import { createNodeComponent, getInitialDataFromFields } from './createNodeComponent';
+import { FIELD_TYPES, NODE_CATEGORIES } from './nodeSchema';
+import { NODE_ICONS } from './icons';
 
 const fields = [
   {
     key: 'focus',
     label: 'Focus',
-    type: 'select',
+    type: FIELD_TYPES.SELECT,
     defaultValue: 'Clarity',
     options: [
       { label: 'Clarity', value: 'Clarity' },
@@ -15,7 +17,7 @@ const fields = [
   {
     key: 'strictness',
     label: 'Strictness',
-    type: 'select',
+    type: FIELD_TYPES.SELECT,
     defaultValue: 'Balanced',
     options: [
       { label: 'Light', value: 'Light' },
@@ -37,6 +39,8 @@ export const ReviewNode = createNodeComponent({
 export const reviewNodeDefinition = {
   type: 'review',
   label: 'Review',
+  category: NODE_CATEGORIES.UTILITIES,
+  icon: NODE_ICONS.REVIEW,
   description: 'Score and revise generated output.',
   accent: '#ef4444',
   component: ReviewNode,

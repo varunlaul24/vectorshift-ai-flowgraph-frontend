@@ -1,16 +1,18 @@
 import { createNodeComponent, getInitialDataFromFields } from './createNodeComponent';
+import { FIELD_TYPES, NODE_CATEGORIES } from './nodeSchema';
+import { NODE_ICONS } from './icons';
 
 const fields = [
   {
     key: 'templateName',
     label: 'Name',
-    type: 'text',
+    type: FIELD_TYPES.TEXT,
     defaultValue: ({ id }) => id.replace('promptTemplate-', 'prompt_'),
   },
   {
     key: 'format',
     label: 'Format',
-    type: 'select',
+    type: FIELD_TYPES.SELECT,
     defaultValue: 'Chat',
     options: [
       { label: 'Chat', value: 'Chat' },
@@ -32,6 +34,8 @@ export const PromptNode = createNodeComponent({
 export const promptNodeDefinition = {
   type: 'promptTemplate',
   label: 'Prompt',
+  category: NODE_CATEGORIES.AI,
+  icon: NODE_ICONS.TEXT,
   description: 'Compose reusable prompt blocks.',
   accent: '#14b8a6',
   component: PromptNode,

@@ -54,6 +54,21 @@ code {
   color: #475569;
 }
 
+.toolbar-category {
+  margin-bottom: 32px;
+}
+
+.toolbar-category__title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 16px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+  padding-bottom: 8px;
+}
+
 .toolbar-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -62,11 +77,11 @@ code {
 
 .toolbar-node {
   cursor: grab;
-  min-height: 92px;
+  min-height: 100px;
   padding: 16px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   border-radius: 16px;
   border: 1px solid rgba(148, 163, 184, 0.45);
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.78));
@@ -85,12 +100,24 @@ code {
   height: 4px;
   border-radius: 999px;
   background: var(--node-accent);
+  margin-bottom: 12px;
+}
+
+.toolbar-node__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.toolbar-node__icon {
+  font-size: 20px;
 }
 
 .toolbar-node__label {
-  margin-top: 10px;
   font-size: 18px;
   font-weight: 700;
+  margin: 0;
 }
 
 .toolbar-node__description {

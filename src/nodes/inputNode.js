@@ -1,18 +1,20 @@
 // inputNode.js
 
 import { createNodeComponent, getInitialDataFromFields } from './createNodeComponent';
+import { FIELD_TYPES, NODE_CATEGORIES } from './nodeSchema';
+import { NODE_ICONS } from './icons';
 
 const fields = [
   {
     key: 'inputName',
     label: 'Name',
-    type: 'text',
+    type: FIELD_TYPES.TEXT,
     defaultValue: ({ id }) => id.replace('customInput-', 'input_'),
   },
   {
     key: 'inputType',
     label: 'Type',
-    type: 'select',
+    type: FIELD_TYPES.SELECT,
     defaultValue: 'Text',
     options: [
       { label: 'Text', value: 'Text' },
@@ -32,6 +34,8 @@ export const InputNode = createNodeComponent({
 export const inputNodeDefinition = {
   type: 'customInput',
   label: 'Input',
+  category: NODE_CATEGORIES.IO,
+  icon: NODE_ICONS.INPUT,
   description: 'Introduce data into the flow.',
   accent: '#0ea5e9',
   component: InputNode,
