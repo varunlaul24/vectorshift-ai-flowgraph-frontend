@@ -1,0 +1,112 @@
+.toolbar-shell {
+  padding: 24px 24px 12px;
+}
+
+.toolbar-shell__copy {
+  max-width: 760px;
+  margin-bottom: 18px;
+}
+
+.toolbar-shell__eyebrow {
+  display: inline-block;
+  margin-bottom: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #475569;
+}
+
+.toolbar-shell__title {
+  margin: 0;
+  font-size: 32px;
+  line-height: 1.05;
+}
+
+.toolbar-shell__text {
+  max-width: 680px;
+  margin: 10px 0 0;
+  color: #475569;
+}
+
+.toolbar-category {
+  margin-bottom: 32px;
+}
+
+.toolbar-category__title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 16px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+  padding-bottom: 8px;
+}
+
+.toolbar-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.toolbar-node {
+  cursor: grab;
+  min-height: 100px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  border-radius: 16px;
+  border: 1px solid rgba(148, 163, 184, 0.45);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.78));
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+
+.toolbar-node:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 44px rgba(15, 23, 42, 0.12);
+}
+
+.toolbar-node::before {
+  content: '';
+  width: 48px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--node-accent);
+  margin-bottom: 12px;
+}
+
+.toolbar-node__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.toolbar-node__icon {
+  font-size: 20px;
+}
+
+.toolbar-node__label {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.toolbar-node__description {
+  color: #475569;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+  .toolbar-shell {
+    padding: 18px 18px 12px;
+  }
+
+  .toolbar-shell__title {
+    font-size: 26px;
+  }
+}

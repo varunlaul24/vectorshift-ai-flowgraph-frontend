@@ -2,6 +2,7 @@
 
 import { DraggableNode } from './draggableNode';
 import { toolbarNodes } from '../../nodes/nodeRegistry';
+import './toolbar.css';
 
 export const PipelineToolbar = () => {
     const groupedNodes = toolbarNodes.reduce((acc, node) => {

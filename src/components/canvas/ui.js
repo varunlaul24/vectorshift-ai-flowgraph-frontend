@@ -7,8 +7,8 @@ import ReactFlow, { Controls, Background, MiniMap } from 'reactflow';
 import { useStore } from '../../hooks/useStore';
 import { shallow } from 'zustand/shallow';
 import { getInitialNodeData, nodeTypes } from '../../nodes/nodeRegistry';
-
 import 'reactflow/dist/style.css';
+import './canvas.css';
 
 const gridSize = 20;
 const proOptions = { hideAttribution: true };
