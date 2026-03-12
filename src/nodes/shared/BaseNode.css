@@ -1,12 +1,14 @@
 .node-card {
   position: relative;
-  width: 260px;
-  min-height: 150px;
-  padding: 16px;
-  border-radius: 18px;
-  border: 1px solid rgba(148, 163, 184, 0.4);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.96));
-  box-shadow: 0 20px 44px rgba(15, 23, 42, 0.12);
+  width: 220px;
+  min-height: 100px;
+  padding: 12px;
+  border-radius: 4px;
+  border: 1px solid var(--blender-border);
+  background-color: var(--blender-panel-bg);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  color: var(--blender-text);
+  font-family: var(--blender-font);
 }
 
 .node-card::before {
@@ -14,67 +16,78 @@
   position: absolute;
   inset: 0 auto auto 0;
   width: 100%;
-  height: 4px;
-  border-radius: 18px 18px 0 0;
-  background: linear-gradient(90deg, var(--node-accent), rgba(255, 255, 255, 0));
+  height: 2px;
+  border-radius: 4px 4px 0 0;
+  background-color: var(--node-accent);
 }
 
 .node-card__header {
   display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-bottom: 14px;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid var(--blender-border);
+  padding-bottom: 6px;
 }
 
 .node-card__title {
-  font-size: 18px;
-  font-weight: 700;
+  font-size: 13px;
+  font-weight: 600;
+  color: #eee;
 }
 
 .node-card__subtitle {
-  color: #475569;
-  font-size: 13px;
-  line-height: 1.4;
+  display: none; /* Hide subtitle in compact Blender mode */
 }
 
 .node-card__body {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 }
 
 .node-field {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
 }
 
 .node-field__label {
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  color: #334155;
+  font-size: 11px;
+  font-weight: 500;
+  color: #888;
 }
 
 .node-field__control {
   width: 100%;
-  border: 1px solid rgba(148, 163, 184, 0.6);
-  border-radius: 10px;
-  padding: 10px 12px;
-  background: rgba(255, 255, 255, 0.95);
-  color: #0f172a;
+  border: 1px solid var(--blender-border);
+  border-radius: 3px;
+  padding: 4px 8px;
+  background-color: var(--blender-sidebar);
+  color: #ccc;
+  font-size: 12px;
+}
+
+.node-field__control:focus {
+  outline: 1px solid var(--blender-accent);
+  border-color: var(--blender-accent);
 }
 
 .node-field__control--textarea {
   resize: vertical;
-  min-height: 88px;
+  min-height: 60px;
 }
 
 .node-handle {
-  width: 12px;
-  height: 12px;
-  border: 2px solid #ffffff;
-  background: var(--node-accent);
+  width: 10px;
+  height: 10px;
+  border: 1px solid var(--blender-border);
+  background-color: var(--blender-header);
+}
+
+.node-handle:hover {
+  background-color: var(--blender-accent);
 }
 
 @media (max-width: 768px) {

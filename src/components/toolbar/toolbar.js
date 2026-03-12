@@ -13,18 +13,15 @@ export const PipelineToolbar = () => {
     }, {});
 
     return (
-        <div className="toolbar-shell">
-            <div className="toolbar-shell__copy">
-                <span className="toolbar-shell__eyebrow">Node Catalog</span>
-                <h1 className="toolbar-shell__title">Build pipelines from reusable node definitions</h1>
-                <p className="toolbar-shell__text">
-                </p>
+        <aside className="blender-sidebar">
+            <div className="blender-sidebar__header">
+                <span className="blender-sidebar__title">Node Catalog</span>
             </div>
-            <div className="toolbar-container">
+            <div className="blender-sidebar__content">
                 {Object.entries(groupedNodes).map(([category, nodes]) => (
-                    <div key={category} className="toolbar-category">
-                        <h2 className="toolbar-category__title">{category}</h2>
-                        <div className="toolbar-grid">
+                    <details key={category} open className="blender-category">
+                        <summary className="blender-category__summary">{category}</summary>
+                        <div className="blender-node-list">
                             {nodes.map((node) => (
                                 <DraggableNode
                                     key={node.type}
@@ -36,9 +33,9 @@ export const PipelineToolbar = () => {
                                 />
                             ))}
                         </div>
-                    </div>
+                    </details>
                 ))}
             </div>
-        </div>
+        </aside>
     );
 };

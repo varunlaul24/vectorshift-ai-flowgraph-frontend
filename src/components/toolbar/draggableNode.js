@@ -10,17 +10,16 @@ export const DraggableNode = ({ type, label, description, icon, accent }) => {
   
     return (
       <div
-        className="toolbar-node"
+        className="blender-node-item"
         onDragStart={(event) => onDragStart(event, type)}
         onDragEnd={(event) => (event.target.style.cursor = 'grab')}
-        style={{ '--node-accent': accent }}
         draggable
+        title={description}
       >
-          <div className="toolbar-node__header">
-            <span className="toolbar-node__icon">{icon}</span>
-            <span className="toolbar-node__label">{label}</span>
+          <div className="blender-node-item__icon" style={{ borderColor: accent }}>
+            {icon}
           </div>
-          <span className="toolbar-node__description">{description}</span>
+          <span className="blender-node-item__label">{label}</span>
       </div>
     );
   };
