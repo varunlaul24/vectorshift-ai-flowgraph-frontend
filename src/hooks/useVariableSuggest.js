@@ -18,9 +18,12 @@ export const useVariableSuggest = (id, fieldKey) => {
     .filter(edge => edge.target === id)
     .map(edge => edge.source);
 
-  const availableInputNodes = nodes.filter(n => 
-    n.type === 'customInput' && !connectedSourceIds.includes(n.id)
-  );
+  const availableNodes = nodes.filter(n => {
+    if (n.id === id) return false;
+    if (connectedSourceIds.includes(n.id)) return false;
+    const hasNameField = Object.keys(n.data || {}).some(key => key.toLowerCase().includes('name'));
+    return hasNameField;
+  });
 
   const handleTextChange = (event) => {
     const newVal = event.target.value;
@@ -30,7 +33,7 @@ export const useVariableSuggest = (id, fieldKey) => {
     const cursor = event.target.selectionEnd;
     const lastTwo = newVal.slice(Math.max(0, cursor - 2), cursor);
     
-    if (lastTwo === '{{' && availableInputNodes.length > 0) {
+    if (lastTwo === '{{' && availableNodes.length > 0) {
       const textarea = textareaRef.current;
       const textBeforeCursor = newVal.substring(0, cursor);
       const lines = textBeforeCursor.split('\n');
@@ -54,7 +57,8 @@ export const useVariableSuggest = (id, fieldKey) => {
   };
 
   const insertVariable = (node) => {
-    const varName = node.data?.inputName || node.id;
+    const nameKey = Object.keys(node.data || {}).find(key => key.toLowerCase().includes('name'));
+    const varName = node.data?.[nameKey] || node.id;
     const textarea = textareaRef.current;
     if (!textarea) {
       return;
@@ -85,7 +89,7 @@ export const useVariableSuggest = (id, fieldKey) => {
   };
 
   const VariablePopup = () => {
-    if (!showPopup || availableInputNodes.length === 0) return null;
+    if (!showPopup || availableNodes.length === 0) return null;
 
     return (
       <div 
@@ -97,20 +101,24 @@ export const useVariableSuggest = (id, fieldKey) => {
         onMouseDown={(e) => e.stopPropagation()}
       >
         <div className="variable-popup__header">Nodes</div>
-        {availableInputNodes.map(node => (
-          <div 
-            key={node.id} 
-            className="variable-popup__item"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              insertVariable(node);
-            }}
-          >
-            <span>{node.data?.inputName || node.id}</span>
-            <span className="variable-popup__badge">Input</span>
-          </div>
-        ))}
+        {availableNodes.map(node => {
+          const nameKey = Object.keys(node.data || {}).find(key => key.toLowerCase().includes('name'));
+          const nodeName = node.data?.[nameKey] || node.id;
+          return (
+            <div 
+              key={node.id} 
+              className="variable-popup__item"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                insertVariable(node);
+              }}
+            >
+              <span>{nodeName}</span>
+              <span className="variable-popup__badge">{node.type}</span>
+            </div>
+          );
+        })}
       </div>
     );
   };

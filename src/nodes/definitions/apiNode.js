@@ -27,7 +27,7 @@ export const ApiNode = createNodeComponent({
   category: NODE_CATEGORIES.INTEGRATION,
   icon: NODE_ICONS.API,
   title: 'API Request',
-  subtitle: 'Call an external HTTP endpoint.',
+  description: 'Call an external HTTP endpoint.',
   accent: '#f97316',
   fields,
   inputs: [{ key: 'payload' }, { key: 'auth' }],

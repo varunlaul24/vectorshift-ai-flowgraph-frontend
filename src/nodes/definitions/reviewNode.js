@@ -32,7 +32,6 @@ export const ReviewNode = createNodeComponent({
   category: NODE_CATEGORIES.UTILITIES,
   icon: NODE_ICONS.REVIEW,
   title: 'Review',
-  subtitle: 'Evaluate content before it leaves the flow.',
   description: 'Score and revise generated output.',
   accent: '#ef4444',
   fields,

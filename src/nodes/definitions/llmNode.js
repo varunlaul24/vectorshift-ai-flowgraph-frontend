@@ -9,8 +9,7 @@ export const LLMNode = createNodeComponent({
   category: NODE_CATEGORIES.AI,
   icon: NODE_ICONS.LLM,
   title: 'LLM',
-  subtitle: 'Generate a response from system and prompt inputs.',
-  description: 'Run a large language model step.',
+  description: 'Generate a response from system and prompt inputs.',
   accent: '#6366f1',
   fields: [
     {

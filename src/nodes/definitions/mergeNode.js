@@ -27,7 +27,6 @@ export const MergeNode = createNodeComponent({
   category: NODE_CATEGORIES.UTILITIES,
   icon: NODE_ICONS.MERGE,
   title: 'Merge',
-  subtitle: 'Combine two upstream results.',
   description: 'Combine multiple branches.',
   accent: '#f59e0b',
   fields,

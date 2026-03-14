@@ -32,7 +32,6 @@ export const ClassifierNode = createNodeComponent({
   category: NODE_CATEGORIES.AI,
   icon: NODE_ICONS.CLASSIFIER,
   title: 'Classifier',
-  subtitle: 'Route text into labeled outcomes.',
   description: 'Branch flow by label confidence.',
   accent: '#8b5cf6',
   fields,

@@ -28,7 +28,6 @@ export const PromptNode = createNodeComponent({
   icon: NODE_ICONS.TEXT,
   title: 'Prompt Template',
   label: 'Prompt',
-  subtitle: 'Shape prompts from reusable inputs.',
   description: 'Compose reusable prompt blocks.',
   accent: '#14b8a6',
   fields,

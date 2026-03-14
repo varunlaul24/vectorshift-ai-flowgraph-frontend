@@ -182,7 +182,7 @@ export const createNodeComponent = (config) => {
     return (
       <BaseNode
         title={config.title}
-        subtitle={config.subtitle}
+        description={config.description}
         accent={config.accent}
         handles={handles}
         style={{ overflow: 'visible' }}

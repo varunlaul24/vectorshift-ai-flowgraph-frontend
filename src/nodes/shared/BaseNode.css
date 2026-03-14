@@ -37,8 +37,12 @@
   color: #eee;
 }
 
-.node-card__subtitle {
-  display: none; /* Hide subtitle in compact Blender mode */
+.node-card__description {
+  font-size: 11px;
+  color: #888;
+  font-style: italic;
+  margin-bottom: 8px;
+  padding: 0 4px;
 }
 
 .node-card__body {

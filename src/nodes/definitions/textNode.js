@@ -25,7 +25,7 @@ export const TextNode = createNodeComponent({
   category: NODE_CATEGORIES.UTILITIES,
   icon: NODE_ICONS.TEXT,
   title: 'Text',
-  subtitle: 'Freeform text node with auto-resize and variable suggestions.',
+  description: 'Freeform text node with auto-resize and variable suggestions.',
   accent: '#ec4899',
   fields,
   outputs: [{ key: 'output' }],

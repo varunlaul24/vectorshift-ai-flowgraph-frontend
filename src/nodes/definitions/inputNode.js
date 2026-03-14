@@ -28,7 +28,6 @@ export const InputNode = createNodeComponent({
   category: NODE_CATEGORIES.IO,
   icon: NODE_ICONS.INPUT,
   title: 'Input',
-  subtitle: 'Expose external values to the pipeline.',
   description: 'Introduce data into the flow.',
   accent: '#0ea5e9',
   fields,

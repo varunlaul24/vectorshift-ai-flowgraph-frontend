@@ -35,7 +35,6 @@ export const OutputNode = createNodeComponent({
   category: NODE_CATEGORIES.IO,
   icon: NODE_ICONS.OUTPUT,
   title: 'Output',
-  subtitle: 'Collect the final pipeline result.',
   description: 'Expose a result from the flow.',
   accent: '#22c55e',
   fields,
