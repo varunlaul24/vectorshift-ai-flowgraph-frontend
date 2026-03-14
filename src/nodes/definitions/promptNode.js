@@ -25,7 +25,7 @@ const fields = [
 export const PromptNode = createNodeComponent({
   type: 'prompt',
   category: NODE_CATEGORIES.AI,
-  icon: NODE_ICONS.TEXT,
+  icon: NODE_ICONS.PROMPT,
   title: 'Prompt Template',
   label: 'Prompt',
   description: 'Compose reusable prompt blocks.',

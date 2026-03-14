@@ -77,6 +77,14 @@ body {
   letter-spacing: -0.025em;
   color: var(--text-primary);
   font-size: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.layout-header__brand img {
+  border-radius: 6px;
+  object-fit: contain;
 }
 
 .layout-main {

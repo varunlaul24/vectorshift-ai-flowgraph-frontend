@@ -17,7 +17,7 @@ export const LLMNode = createNodeComponent({
       label: 'Model',
       type: FIELD_TYPES.SELECT,
       options: [
-        { value: 'gpt-5-mini', label: 'Gpt-5 mini' },
+        { value: 'gpt-5-mini', label: 'GPT-5 mini' },
         { value: 'gemini-3-flash', label: 'Gemini 3 Flash' },
         { value: 'claude-haiku-4.5', label: 'Claude Haiku 4.5' },
       ],
