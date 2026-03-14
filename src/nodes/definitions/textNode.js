@@ -1,5 +1,6 @@
 // textNode.js
 
+import { useRef, useEffect } from 'react';
 import { BaseNode } from '../shared/BaseNode';
 import { buildNodeHandles } from '../factory/createNodeComponent';
 import { useStore } from '../../hooks/useStore';
@@ -13,6 +14,21 @@ const selector = (state) => ({
 export const TextNode = ({ id, data }) => {
   const { updateNodeField } = useStore(selector);
   const text = data?.text ?? '{{input}}';
+  const textareaRef = useRef(null);
+
+  const adjustSize = () => {
+    const textarea = textareaRef.current;
+    if (textarea) {
+      textarea.style.height = 'auto';
+      textarea.style.height = `${textarea.scrollHeight}px`;
+    }
+  };
+
+  // pushing the execution to the end of the event loop's task queue.
+  useEffect(() => {
+    const timeoutId = setTimeout(adjustSize, 0);
+    return () => clearTimeout(timeoutId);
+  }, [text]);
 
   return (
     <BaseNode
@@ -24,10 +40,11 @@ export const TextNode = ({ id, data }) => {
       <label className="node-field">
         <span className="node-field__label">Text</span>
         <textarea
+          ref={textareaRef}
           className="node-field__control node-field__control--textarea"
           value={text}
-          rows={4}
           onChange={(event) => updateNodeField(id, 'text', event.target.value)}
+          style={{ overflow: 'hidden', resize: 'none' }}
         />
       </label>
     </BaseNode>

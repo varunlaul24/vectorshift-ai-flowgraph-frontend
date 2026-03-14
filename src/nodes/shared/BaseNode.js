@@ -1,12 +1,13 @@
 import { Handle } from 'reactflow';
 import './BaseNode.css';
 
-export const BaseNode = ({ title, subtitle, accent, handles = [], children, className = '' }) => {
+export const BaseNode = ({ title, subtitle, accent, handles = [], children, className = '', style = {} }) => {
   return (
     <div
       className={`node-card ${className}`.trim()}
       style={{
         '--node-accent': accent,
+        ...style,
       }}
     >
       {handles.map((handle) => (
