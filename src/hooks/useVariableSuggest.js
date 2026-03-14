@@ -4,10 +4,11 @@ import { useStore } from '../hooks/useStore';
 const selector = (state) => ({
   nodes: state.nodes,
   updateNodeField: state.updateNodeField,
+  onConnect: state.onConnect,
 });
 
 export const useVariableSuggest = (id, fieldKey) => {
-  const { nodes, updateNodeField } = useStore(selector);
+  const { nodes, updateNodeField, onConnect } = useStore(selector);
   const textareaRef = useRef(null);
   const [showPopup, setShowPopup] = useState(false);
   const [popupPos, setPopupPos] = useState({ top: 0, left: 10 });
@@ -34,6 +35,10 @@ export const useVariableSuggest = (id, fieldKey) => {
       
       const topOffset = (currentLineIndex + 1) * lineHeight + paddingTop + 20;
 
+      // Check if the current field is actually a textarea that should have an input handle
+      // This is helpful for debugging if the handle isn't there
+      console.log(`Variable Suggest for node ${id}, field ${fieldKey}. Searching for nodes to connect...`);
+
       setPopupPos({ 
         top: topOffset, 
         left: 10 
@@ -44,9 +49,12 @@ export const useVariableSuggest = (id, fieldKey) => {
     }
   };
 
-  const insertVariable = (varName) => {
+  const insertVariable = (node) => {
+    const varName = node.data?.inputName || node.id;
     const textarea = textareaRef.current;
-    if (!textarea) return;
+    if (!textarea) {
+      return;
+    }
 
     const start = textarea.selectionStart;
     const end = textarea.selectionEnd;
@@ -54,9 +62,19 @@ export const useVariableSuggest = (id, fieldKey) => {
     const newText = currentText.substring(0, start) + varName + '}}' + currentText.substring(end);
     
     updateNodeField(id, fieldKey, newText);
+
+    if (onConnect) {
+      const connection = {
+        source: node.id,
+        sourceHandle: `${node.id}-value`,
+        target: id,
+        targetHandle: `${id}-${fieldKey}`,
+      };
+      onConnect(connection);
+    }
+
     setShowPopup(false);
     
-    // Use requestAnimationFrame to ensure the focus happens after the re-render
     requestAnimationFrame(() => {
       textarea.focus();
     });
@@ -67,18 +85,23 @@ export const useVariableSuggest = (id, fieldKey) => {
 
     return (
       <div 
-        className="variable-popup"
+        className="variable-popup nodrag nopan"
         style={{
           top: popupPos.top,
           left: popupPos.left,
         }}
+        onMouseDown={(e) => e.stopPropagation()}
       >
         <div className="variable-popup__header">Nodes</div>
         {inputNodes.map(node => (
           <div 
             key={node.id} 
             className="variable-popup__item"
-            onClick={() => insertVariable(node.data?.inputName || node.id)}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              insertVariable(node);
+            }}
           >
             <span>{node.data?.inputName || node.id}</span>
             <span className="variable-popup__badge">Input</span>

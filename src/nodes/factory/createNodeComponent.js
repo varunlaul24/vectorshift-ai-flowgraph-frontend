@@ -77,7 +77,8 @@ const FieldControl = ({ field, value, onChange, nodeId, isInvalid }) => {
   } = useVariableSuggest(nodeId, field.key, value);
 
   useEffect(() => {
-    if (field.type === FIELD_TYPES.TEXTAREA && field.autoResize) {
+    const isTextarea = field.type === FIELD_TYPES.TEXTAREA || field.type === 'textarea';
+    if (isTextarea && field.autoResize) {
       const textarea = textareaRef.current;
       if (textarea) {
         textarea.style.height = 'auto';
@@ -98,7 +99,7 @@ const FieldControl = ({ field, value, onChange, nodeId, isInvalid }) => {
     );
   }
 
-  if (field.type === FIELD_TYPES.TEXTAREA) {
+  if (field.type === FIELD_TYPES.TEXTAREA || field.type === 'textarea') {
     const isAutoResize = !!field.autoResize;
     return (
       <div style={{ position: 'relative' }}>
@@ -134,9 +135,16 @@ export const createNodeComponent = (config) => {
   const Component = function GeneratedNode({ id, data }) {
     const { updateNodeField, isNameUnique } = useStore(selector);
     const context = { id, data };
+    const textareaFields = config.fields?.filter(f => f.type === FIELD_TYPES.TEXTAREA || f.type === 'textarea') || [];
+    const textareaInputs = textareaFields.map(f => ({ key: f.key }));
+
     const handles = config.getHandles
       ? config.getHandles(context)
-      : buildNodeHandles({ id, inputs: config.inputs, outputs: config.outputs });
+      : buildNodeHandles({ 
+          id, 
+          inputs: [...(config.inputs || []), ...textareaInputs], 
+          outputs: config.outputs 
+        });
 
     const content = config.renderContent ? (
       config.renderContent({
