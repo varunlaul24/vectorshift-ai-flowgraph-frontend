@@ -1,7 +1,7 @@
 // llmNode.js
 
 import { createNodeComponent } from '../factory/createNodeComponent';
-import { NODE_CATEGORIES } from '../nodeSchema';
+import { FIELD_TYPES, NODE_CATEGORIES } from '../nodeSchema';
 import { NODE_ICONS } from '../shared/icons';
 
 export const LLMNode = createNodeComponent({
@@ -12,6 +12,31 @@ export const LLMNode = createNodeComponent({
   subtitle: 'Generate a response from system and prompt inputs.',
   description: 'Run a large language model step.',
   accent: '#6366f1',
+  fields: [
+    {
+      key: 'model',
+      label: 'Model',
+      type: FIELD_TYPES.SELECT,
+      options: [
+        { value: 'gpt-5-mini', label: 'Gpt-5 mini' },
+        { value: 'gemini-3-flash', label: 'Gemini 3 Flash' },
+        { value: 'claude-haiku-4.5', label: 'Claude Haiku 4.5' },
+      ],
+      defaultValue: 'gpt-5-mini',
+    },
+    {
+      key: 'system',
+      label: 'System Prompt',
+      type: 'textarea',
+      placeholder: 'System instructions...',
+    },
+    {
+      key: 'prompt',
+      label: 'Prompt',
+      type: 'textarea',
+      placeholder: 'User prompt...',
+    },
+  ],
   inputs: [{ key: 'system' }, { key: 'prompt' }],
   outputs: [{ key: 'response' }],
 });
