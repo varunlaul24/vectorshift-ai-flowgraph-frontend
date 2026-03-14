@@ -74,6 +74,22 @@
   border-color: var(--blender-accent);
 }
 
+.node-field__control--invalid {
+  border-color: #ef4444;
+  outline: 1px solid #ef4444;
+}
+
+.node-field__control--invalid:focus {
+  outline: 1px solid #ef4444;
+  border-color: #ef4444;
+}
+
+.node-field__error {
+  color: #ef4444;
+  font-size: 10px;
+  margin-left: 4px;
+}
+
 .node-field__control--textarea {
   resize: vertical;
   min-height: 60px;

@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Position } from 'reactflow';
 import { useStore } from '../../hooks/useStore';
 import { BaseNode } from '../shared/BaseNode';
@@ -7,6 +7,7 @@ import { useVariableSuggest } from '../../hooks/useVariableSuggest';
 
 const selector = (state) => ({
   updateNodeField: state.updateNodeField,
+  isNameUnique: state.isNameUnique,
 });
 
 const getResolvedValue = (value, context) => {
@@ -68,7 +69,7 @@ export const buildNodeHandles = ({ id, inputs = [], outputs = [], customHandles 
   ];
 };
 
-const FieldControl = ({ field, value, onChange, nodeId }) => {
+const FieldControl = ({ field, value, onChange, nodeId, isInvalid }) => {
   const {
     textareaRef,
     handleTextChange,
@@ -87,7 +88,7 @@ const FieldControl = ({ field, value, onChange, nodeId }) => {
 
   if (field.type === FIELD_TYPES.SELECT) {
     return (
-      <select className="node-field__control" value={value} onChange={onChange}>
+      <select className={`node-field__control ${isInvalid ? 'node-field__control--invalid' : ''}`} value={value} onChange={onChange}>
         {field.options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}
@@ -103,7 +104,7 @@ const FieldControl = ({ field, value, onChange, nodeId }) => {
       <div style={{ position: 'relative' }}>
         <textarea
           ref={textareaRef}
-          className="node-field__control node-field__control--textarea"
+          className={`node-field__control node-field__control--textarea ${isInvalid ? 'node-field__control--invalid' : ''}`}
           value={value}
           onChange={(e) => {
             handleTextChange(e);
@@ -120,7 +121,7 @@ const FieldControl = ({ field, value, onChange, nodeId }) => {
 
   return (
     <input
-      className="node-field__control"
+      className={`node-field__control ${isInvalid ? 'node-field__control--invalid' : ''}`}
       type={field.type || FIELD_TYPES.TEXT}
       value={value}
       onChange={onChange}
@@ -131,7 +132,7 @@ const FieldControl = ({ field, value, onChange, nodeId }) => {
 
 export const createNodeComponent = (config) => {
   const Component = function GeneratedNode({ id, data }) {
-    const { updateNodeField } = useStore(selector);
+    const { updateNodeField, isNameUnique } = useStore(selector);
     const context = { id, data };
     const handles = config.getHandles
       ? config.getHandles(context)
@@ -142,19 +143,26 @@ export const createNodeComponent = (config) => {
         id,
         data,
         updateNodeField,
+        isNameUnique,
       })
     ) : (
       <>
         {config.fields?.map((field) => {
           const value = data?.[field.key] ?? getFieldDefaultValue(field, context);
+          const isNameField = field.key.toLowerCase().includes('name');
+          const isInvalid = isNameField && !isNameUnique(id, value);
 
           return (
             <label key={field.key} className="node-field">
-              <span className="node-field__label">{field.label}</span>
+              <span className="node-field__label">
+                {field.label}
+                {isInvalid && <span className="node-field__error"> (must be unique)</span>}
+              </span>
               <FieldControl
                 nodeId={id}
                 field={field}
                 value={value}
+                isInvalid={isInvalid}
                 onChange={(event) => updateNodeField(id, field.key, event.target.value)}
               />
             </label>
@@ -176,22 +184,20 @@ export const createNodeComponent = (config) => {
     );
   };
 
-  if (config.type) {
-    Component.definition = {
-      type: config.type,
-      label: config.label || config.title,
-      category: config.category,
-      icon: config.icon,
-      description: config.description || config.subtitle,
-      accent: config.accent,
-      component: Component,
-      getInitialData: (id) => ({
-        id,
-        nodeType: config.type,
-        ...getInitialDataFromFields(config.fields || [], { id, data: {} }),
-      }),
-    };
-  }
+  const definition = config.type ? {
+    type: config.type,
+    label: config.label || config.title,
+    category: config.category,
+    icon: config.icon,
+    description: config.description || config.subtitle,
+    accent: config.accent,
+    component: Component,
+    getInitialData: (id) => ({
+      id,
+      nodeType: config.type,
+      ...getInitialDataFromFields(config.fields || [], { id, data: {} }),
+    }),
+  } : undefined;
 
-  return Component;
+  return Object.assign(Component, { definition });
 };
