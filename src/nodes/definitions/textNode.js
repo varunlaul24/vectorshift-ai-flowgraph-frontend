@@ -1,55 +1,32 @@
 // textNode.js
 
-import { useRef, useEffect } from 'react';
-import { BaseNode } from '../shared/BaseNode';
-import { buildNodeHandles } from '../factory/createNodeComponent';
-import { useStore } from '../../hooks/useStore';
-import { NODE_CATEGORIES } from '../nodeSchema';
+import { createNodeComponent, getInitialDataFromFields } from '../factory/createNodeComponent';
+import { FIELD_TYPES, NODE_CATEGORIES } from '../nodeSchema';
 import { NODE_ICONS } from '../shared/icons';
 
-const selector = (state) => ({
-  updateNodeField: state.updateNodeField,
+const fields = [
+  {
+    key: 'textName',
+    label: 'Name',
+    type: FIELD_TYPES.TEXT,
+    defaultValue: ({ id }) => id.replace('text-', 'text_'),
+  },
+  {
+    key: 'text',
+    label: 'Text',
+    type: 'textarea',
+    autoResize: true,
+    placeholder: 'Type "{{" to utilize variables',
+  },
+];
+
+export const TextNode = createNodeComponent({
+  title: 'Text',
+  subtitle: 'Freeform text node with auto-resize and variable suggestions.',
+  accent: '#ec4899',
+  fields,
+  outputs: [{ key: 'output' }],
 });
-
-export const TextNode = ({ id, data }) => {
-  const { updateNodeField } = useStore(selector);
-  const text = data?.text ?? '{{input}}';
-  const textareaRef = useRef(null);
-
-  const adjustSize = () => {
-    const textarea = textareaRef.current;
-    if (textarea) {
-      textarea.style.height = 'auto';
-      textarea.style.height = `${textarea.scrollHeight}px`;
-    }
-  };
-
-  // pushing the execution to the end of the event loop's task queue.
-  useEffect(() => {
-    const timeoutId = setTimeout(adjustSize, 0);
-    return () => clearTimeout(timeoutId);
-  }, [text]);
-
-  return (
-    <BaseNode
-      title="Text"
-      subtitle="Custom body example: freeform text node with a custom editor."
-      accent="#ec4899"
-      handles={buildNodeHandles({ id, outputs: [{ key: 'output' }] })}
-    >
-      <label className="node-field">
-        <span className="node-field__label">Text</span>
-        <textarea
-          ref={textareaRef}
-          className="node-field__control node-field__control--textarea"
-          value={text}
-          onChange={(event) => updateNodeField(id, 'text', event.target.value)}
-          style={{ overflow: 'hidden', resize: 'none' }}
-        />
-      </label>
-    </BaseNode>
-  );
-};
 
 export const textNodeDefinition = {
   type: 'text',
@@ -62,6 +39,6 @@ export const textNodeDefinition = {
   getInitialData: (id) => ({
     id,
     nodeType: 'text',
-    text: '{{input}}',
+    ...getInitialDataFromFields(fields, { id, data: {} }),
   }),
 };

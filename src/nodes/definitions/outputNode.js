@@ -21,6 +21,13 @@ const fields = [
       { label: 'Image', value: 'Image' },
     ],
   },
+  {
+    key: 'outputText',
+    label: 'Output',
+    type: FIELD_TYPES.TEXTAREA,
+    autoResize: true,
+    placeholder: 'Type "{{" to utilize variables.',
+  },
 ];
 
 export const OutputNode = createNodeComponent({

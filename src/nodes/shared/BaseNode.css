@@ -90,6 +90,49 @@
   background-color: var(--blender-accent);
 }
 
+.variable-popup {
+  position: absolute;
+  z-index: 1000;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 8px;
+  min-width: 150px;
+  color: #333;
+}
+
+.variable-popup__header {
+  font-size: 10px;
+  color: #888;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.variable-popup__item {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 8px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #333;
+  transition: background-color 0.2s;
+}
+
+.variable-popup__item:hover {
+  background-color: #f0f0f0;
+}
+
+.variable-popup__badge {
+  font-size: 10px;
+  color: #888;
+  background: #f5f5f5;
+  padding: 0 4px;
+  border-radius: 2px;
+}
+
 @media (max-width: 768px) {
   .node-card {
     width: 220px;

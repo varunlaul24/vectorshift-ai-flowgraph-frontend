@@ -1,7 +1,9 @@
+import { useRef, useEffect } from 'react';
 import { Position } from 'reactflow';
 import { useStore } from '../../hooks/useStore';
 import { BaseNode } from '../shared/BaseNode';
 import { FIELD_TYPES } from '../nodeSchema';
+import { useVariableSuggest } from '../../hooks/useVariableSuggest';
 
 const selector = (state) => ({
   updateNodeField: state.updateNodeField,
@@ -66,7 +68,23 @@ export const buildNodeHandles = ({ id, inputs = [], outputs = [], customHandles 
   ];
 };
 
-const FieldControl = ({ field, value, onChange }) => {
+const FieldControl = ({ field, value, onChange, nodeId }) => {
+  const {
+    textareaRef,
+    handleTextChange,
+    VariablePopup,
+  } = useVariableSuggest(nodeId, field.key, value);
+
+  useEffect(() => {
+    if (field.type === FIELD_TYPES.TEXTAREA && field.autoResize) {
+      const textarea = textareaRef.current;
+      if (textarea) {
+        textarea.style.height = 'auto';
+        textarea.style.height = `${textarea.scrollHeight}px`;
+      }
+    }
+  }, [value, field, textareaRef]);
+
   if (field.type === FIELD_TYPES.SELECT) {
     return (
       <select className="node-field__control" value={value} onChange={onChange}>
@@ -80,14 +98,23 @@ const FieldControl = ({ field, value, onChange }) => {
   }
 
   if (field.type === FIELD_TYPES.TEXTAREA) {
+    const isAutoResize = !!field.autoResize;
     return (
-      <textarea
-        className="node-field__control node-field__control--textarea"
-        value={value}
-        onChange={onChange}
-        rows={field.rows || 3}
-        placeholder={field.placeholder}
-      />
+      <div style={{ position: 'relative' }}>
+        <textarea
+          ref={textareaRef}
+          className="node-field__control node-field__control--textarea"
+          value={value}
+          onChange={(e) => {
+            handleTextChange(e);
+            onChange(e);
+          }}
+          rows={field.rows || 3}
+          placeholder={field.placeholder || 'Type "{{" to utilize variables'}
+          style={isAutoResize ? { overflow: 'hidden', resize: 'none' } : {}}
+        />
+        <VariablePopup />
+      </div>
     );
   }
 
@@ -125,6 +152,7 @@ export const createNodeComponent = (config) => {
             <label key={field.key} className="node-field">
               <span className="node-field__label">{field.label}</span>
               <FieldControl
+                nodeId={id}
                 field={field}
                 value={value}
                 onChange={(event) => updateNodeField(id, field.key, event.target.value)}
@@ -141,6 +169,7 @@ export const createNodeComponent = (config) => {
         subtitle={config.subtitle}
         accent={config.accent}
         handles={handles}
+        style={{ overflow: 'visible' }}
       >
         {content}
       </BaseNode>
