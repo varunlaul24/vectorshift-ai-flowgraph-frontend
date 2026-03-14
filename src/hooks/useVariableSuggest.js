@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import { useStore } from '../hooks/useStore';
+import { getNodeDefinition } from '../nodes/nodeRegistry';
 
 const selector = (state) => ({
   nodes: state.nodes,
@@ -22,7 +23,10 @@ export const useVariableSuggest = (id, fieldKey) => {
     if (n.id === id) return false;
     if (connectedSourceIds.includes(n.id)) return false;
     const hasNameField = Object.keys(n.data || {}).some(key => key.toLowerCase().includes('name'));
-    return hasNameField;
+    if (!hasNameField) return false;
+    const definition = getNodeDefinition(n.type);
+    const hasOutputs = definition?.outputs && definition.outputs.length > 0;
+    return hasOutputs;
   });
 
   const handleTextChange = (event) => {

@@ -28,6 +28,7 @@ export const TextNode = createNodeComponent({
   description: 'Freeform text node with auto-resize and variable suggestions.',
   accent: '#ec4899',
   fields,
+  inputs: [{ key: 'input' }],
   outputs: [{ key: 'output' }],
 });
 

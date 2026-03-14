@@ -35,8 +35,8 @@ export const ClassifierNode = createNodeComponent({
   description: 'Branch flow by label confidence.',
   accent: '#8b5cf6',
   fields,
-  inputs: [{ key: 'text' }],
-  outputs: [{ key: 'match' }, { key: 'fallback' }],
+  inputs: [{ key: 'input' }],
+  outputs: [{ key: 'output' }],
 });
 
 export const classifierNodeDefinition = ClassifierNode.definition;

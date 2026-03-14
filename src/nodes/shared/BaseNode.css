@@ -11,6 +11,12 @@
   font-family: var(--blender-font);
 }
 
+.react-flow__node {
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
 .node-card::before {
   content: '';
   position: absolute;

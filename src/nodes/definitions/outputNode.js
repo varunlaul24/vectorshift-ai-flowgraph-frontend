@@ -38,7 +38,7 @@ export const OutputNode = createNodeComponent({
   description: 'Expose a result from the flow.',
   accent: '#22c55e',
   fields,
-  inputs: [{ key: 'value' }],
+  inputs: [{ key: 'input' }],
 });
 
 export const outputNodeDefinition = OutputNode.definition;

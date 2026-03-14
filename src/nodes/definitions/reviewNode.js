@@ -35,8 +35,8 @@ export const ReviewNode = createNodeComponent({
   description: 'Score and revise generated output.',
   accent: '#ef4444',
   fields,
-  inputs: [{ key: 'draft' }],
-  outputs: [{ key: 'approved' }, { key: 'changes' }],
+  inputs: [{ key: 'input' }],
+  outputs: [{ key: 'output' }],
 });
 
 export const reviewNodeDefinition = ReviewNode.definition;

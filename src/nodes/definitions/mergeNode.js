@@ -30,8 +30,8 @@ export const MergeNode = createNodeComponent({
   description: 'Combine multiple branches.',
   accent: '#f59e0b',
   fields,
-  inputs: [{ key: 'primary' }, { key: 'secondary' }],
-  outputs: [{ key: 'merged' }],
+  inputs: [{ key: 'input' }],
+  outputs: [{ key: 'output' }],
 });
 
 export const mergeNodeDefinition = MergeNode.definition;

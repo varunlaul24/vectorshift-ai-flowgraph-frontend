@@ -135,14 +135,12 @@ export const createNodeComponent = (config) => {
   const Component = function GeneratedNode({ id, data }) {
     const { updateNodeField, isNameUnique } = useStore(selector);
     const context = { id, data };
-    const textareaFields = config.fields?.filter(f => f.type === FIELD_TYPES.TEXTAREA || f.type === 'textarea') || [];
-    const textareaInputs = textareaFields.map(f => ({ key: f.key }));
 
     const handles = config.getHandles
       ? config.getHandles(context)
       : buildNodeHandles({ 
           id, 
-          inputs: [...(config.inputs || []), ...textareaInputs], 
+          inputs: config.inputs || [], 
           outputs: config.outputs 
         });
 
@@ -199,6 +197,8 @@ export const createNodeComponent = (config) => {
     icon: config.icon,
     description: config.description || config.subtitle,
     accent: config.accent,
+    inputs: config.inputs,
+    outputs: config.outputs,
     component: Component,
     getInitialData: (id) => ({
       id,

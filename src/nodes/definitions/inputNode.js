@@ -9,7 +9,7 @@ const fields = [
     key: 'inputName',
     label: 'Name',
     type: FIELD_TYPES.TEXT,
-    defaultValue: ({ id }) => id.replace('customInput-', 'input_'),
+    defaultValue: ({ id }) => id.replace('input-', 'input_'),
   },
   {
     key: 'inputType',
@@ -24,14 +24,14 @@ const fields = [
 ];
 
 export const InputNode = createNodeComponent({
-  type: 'customInput',
+  type: 'input',
   category: NODE_CATEGORIES.IO,
   icon: NODE_ICONS.INPUT,
   title: 'Input',
   description: 'Introduce data into the flow.',
   accent: '#0ea5e9',
   fields,
-  outputs: [{ key: 'value' }],
+  outputs: [{ key: 'output' }],
 });
 
 export const inputNodeDefinition = InputNode.definition;

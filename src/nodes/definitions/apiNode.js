@@ -30,8 +30,8 @@ export const ApiNode = createNodeComponent({
   description: 'Call an external HTTP endpoint.',
   accent: '#f97316',
   fields,
-  inputs: [{ key: 'payload' }, { key: 'auth' }],
-  outputs: [{ key: 'response' }],
+  inputs: [{ key: 'input' }],
+  outputs: [{ key: 'output' }],
 });
 
 export const apiNodeDefinition = ApiNode.definition;

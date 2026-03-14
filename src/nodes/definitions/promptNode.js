@@ -7,7 +7,7 @@ const fields = [
     key: 'templateName',
     label: 'Name',
     type: FIELD_TYPES.TEXT,
-    defaultValue: ({ id }) => id.replace('promptTemplate-', 'prompt_'),
+    defaultValue: ({ id }) => id.replace('prompt-', 'prompt_'),
   },
   {
     key: 'format',
@@ -23,7 +23,7 @@ const fields = [
 ];
 
 export const PromptNode = createNodeComponent({
-  type: 'promptTemplate',
+  type: 'prompt',
   category: NODE_CATEGORIES.AI,
   icon: NODE_ICONS.TEXT,
   title: 'Prompt Template',
@@ -31,8 +31,8 @@ export const PromptNode = createNodeComponent({
   description: 'Compose reusable prompt blocks.',
   accent: '#14b8a6',
   fields,
-  inputs: [{ key: 'context' }, { key: 'tone' }],
-  outputs: [{ key: 'prompt' }],
+  inputs: [{ key: 'input' }],
+  outputs: [{ key: 'output' }],
 });
 
 export const promptNodeDefinition = PromptNode.definition;

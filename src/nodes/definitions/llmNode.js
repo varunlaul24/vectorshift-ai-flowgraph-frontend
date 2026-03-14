@@ -36,8 +36,8 @@ export const LLMNode = createNodeComponent({
       placeholder: 'User prompt...',
     },
   ],
-  inputs: [{ key: 'system' }, { key: 'prompt' }],
-  outputs: [{ key: 'response' }],
+  inputs: [{ key: 'input' }],
+  outputs: [{ key: 'output' }],
 });
 
 export const llmNodeDefinition = LLMNode.definition;
