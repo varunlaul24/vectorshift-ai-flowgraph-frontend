@@ -1,4 +1,4 @@
-import { createNodeComponent, getInitialDataFromFields } from '../factory/createNodeComponent';
+import { createNodeComponent } from '../factory/createNodeComponent';
 import { FIELD_TYPES, NODE_CATEGORIES } from '../nodeSchema';
 import { NODE_ICONS } from '../shared/icons';
 
@@ -23,6 +23,9 @@ const fields = [
 ];
 
 export const ApiNode = createNodeComponent({
+  type: 'apiRequest',
+  category: NODE_CATEGORIES.INTEGRATION,
+  icon: NODE_ICONS.API,
   title: 'API Request',
   subtitle: 'Call an external HTTP endpoint.',
   accent: '#f97316',
@@ -31,17 +34,4 @@ export const ApiNode = createNodeComponent({
   outputs: [{ key: 'response' }],
 });
 
-export const apiNodeDefinition = {
-  type: 'apiRequest',
-  label: 'API',
-  category: NODE_CATEGORIES.INTEGRATION,
-  icon: NODE_ICONS.API,
-  description: 'Call external services.',
-  accent: '#f97316',
-  component: ApiNode,
-  getInitialData: (id) => ({
-    id,
-    nodeType: 'apiRequest',
-    ...getInitialDataFromFields(fields, { id, data: {} }),
-  }),
-};
+export const apiNodeDefinition = ApiNode.definition;

@@ -1,4 +1,4 @@
-import { createNodeComponent, getInitialDataFromFields } from '../factory/createNodeComponent';
+import { createNodeComponent } from '../factory/createNodeComponent';
 import { FIELD_TYPES, NODE_CATEGORIES } from '../nodeSchema';
 import { NODE_ICONS } from '../shared/icons';
 
@@ -23,25 +23,16 @@ const fields = [
 ];
 
 export const MergeNode = createNodeComponent({
+  type: 'merge',
+  category: NODE_CATEGORIES.UTILITIES,
+  icon: NODE_ICONS.MERGE,
   title: 'Merge',
   subtitle: 'Combine two upstream results.',
+  description: 'Combine multiple branches.',
   accent: '#f59e0b',
   fields,
   inputs: [{ key: 'primary' }, { key: 'secondary' }],
   outputs: [{ key: 'merged' }],
 });
 
-export const mergeNodeDefinition = {
-  type: 'merge',
-  label: 'Merge',
-  category: NODE_CATEGORIES.UTILITIES,
-  icon: NODE_ICONS.MERGE,
-  description: 'Combine multiple branches.',
-  accent: '#f59e0b',
-  component: MergeNode,
-  getInitialData: (id) => ({
-    id,
-    nodeType: 'merge',
-    ...getInitialDataFromFields(fields, { id, data: {} }),
-  }),
-};
+export const mergeNodeDefinition = MergeNode.definition;

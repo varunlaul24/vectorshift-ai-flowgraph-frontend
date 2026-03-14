@@ -130,7 +130,7 @@ const FieldControl = ({ field, value, onChange, nodeId }) => {
 };
 
 export const createNodeComponent = (config) => {
-  return function GeneratedNode({ id, data }) {
+  const Component = function GeneratedNode({ id, data }) {
     const { updateNodeField } = useStore(selector);
     const context = { id, data };
     const handles = config.getHandles
@@ -175,4 +175,23 @@ export const createNodeComponent = (config) => {
       </BaseNode>
     );
   };
+
+  if (config.type) {
+    Component.definition = {
+      type: config.type,
+      label: config.label || config.title,
+      category: config.category,
+      icon: config.icon,
+      description: config.description || config.subtitle,
+      accent: config.accent,
+      component: Component,
+      getInitialData: (id) => ({
+        id,
+        nodeType: config.type,
+        ...getInitialDataFromFields(config.fields || [], { id, data: {} }),
+      }),
+    };
+  }
+
+  return Component;
 };

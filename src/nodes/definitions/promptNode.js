@@ -1,4 +1,4 @@
-import { createNodeComponent, getInitialDataFromFields } from '../factory/createNodeComponent';
+import { createNodeComponent } from '../factory/createNodeComponent';
 import { FIELD_TYPES, NODE_CATEGORIES } from '../nodeSchema';
 import { NODE_ICONS } from '../shared/icons';
 
@@ -23,25 +23,17 @@ const fields = [
 ];
 
 export const PromptNode = createNodeComponent({
+  type: 'promptTemplate',
+  category: NODE_CATEGORIES.AI,
+  icon: NODE_ICONS.TEXT,
   title: 'Prompt Template',
+  label: 'Prompt',
   subtitle: 'Shape prompts from reusable inputs.',
+  description: 'Compose reusable prompt blocks.',
   accent: '#14b8a6',
   fields,
   inputs: [{ key: 'context' }, { key: 'tone' }],
   outputs: [{ key: 'prompt' }],
 });
 
-export const promptNodeDefinition = {
-  type: 'promptTemplate',
-  label: 'Prompt',
-  category: NODE_CATEGORIES.AI,
-  icon: NODE_ICONS.TEXT,
-  description: 'Compose reusable prompt blocks.',
-  accent: '#14b8a6',
-  component: PromptNode,
-  getInitialData: (id) => ({
-    id,
-    nodeType: 'promptTemplate',
-    ...getInitialDataFromFields(fields, { id, data: {} }),
-  }),
-};
+export const promptNodeDefinition = PromptNode.definition;

@@ -1,6 +1,6 @@
 // inputNode.js
 
-import { createNodeComponent, getInitialDataFromFields } from '../factory/createNodeComponent';
+import { createNodeComponent } from '../factory/createNodeComponent';
 import { FIELD_TYPES, NODE_CATEGORIES } from '../nodeSchema';
 import { NODE_ICONS } from '../shared/icons';
 
@@ -24,24 +24,15 @@ const fields = [
 ];
 
 export const InputNode = createNodeComponent({
+  type: 'customInput',
+  category: NODE_CATEGORIES.IO,
+  icon: NODE_ICONS.INPUT,
   title: 'Input',
   subtitle: 'Expose external values to the pipeline.',
+  description: 'Introduce data into the flow.',
   accent: '#0ea5e9',
   fields,
   outputs: [{ key: 'value' }],
 });
 
-export const inputNodeDefinition = {
-  type: 'customInput',
-  label: 'Input',
-  category: NODE_CATEGORIES.IO,
-  icon: NODE_ICONS.INPUT,
-  description: 'Introduce data into the flow.',
-  accent: '#0ea5e9',
-  component: InputNode,
-  getInitialData: (id) => ({
-    id,
-    nodeType: 'customInput',
-    ...getInitialDataFromFields(fields, { id, data: {} }),
-  }),
-};
+export const inputNodeDefinition = InputNode.definition;

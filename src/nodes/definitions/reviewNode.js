@@ -1,4 +1,4 @@
-import { createNodeComponent, getInitialDataFromFields } from '../factory/createNodeComponent';
+import { createNodeComponent } from '../factory/createNodeComponent';
 import { FIELD_TYPES, NODE_CATEGORIES } from '../nodeSchema';
 import { NODE_ICONS } from '../shared/icons';
 
@@ -28,25 +28,16 @@ const fields = [
 ];
 
 export const ReviewNode = createNodeComponent({
+  type: 'review',
+  category: NODE_CATEGORIES.UTILITIES,
+  icon: NODE_ICONS.REVIEW,
   title: 'Review',
   subtitle: 'Evaluate content before it leaves the flow.',
+  description: 'Score and revise generated output.',
   accent: '#ef4444',
   fields,
   inputs: [{ key: 'draft' }],
   outputs: [{ key: 'approved' }, { key: 'changes' }],
 });
 
-export const reviewNodeDefinition = {
-  type: 'review',
-  label: 'Review',
-  category: NODE_CATEGORIES.UTILITIES,
-  icon: NODE_ICONS.REVIEW,
-  description: 'Score and revise generated output.',
-  accent: '#ef4444',
-  component: ReviewNode,
-  getInitialData: (id) => ({
-    id,
-    nodeType: 'review',
-    ...getInitialDataFromFields(fields, { id, data: {} }),
-  }),
-};
+export const reviewNodeDefinition = ReviewNode.definition;

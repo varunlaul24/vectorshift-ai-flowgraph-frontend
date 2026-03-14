@@ -1,6 +1,6 @@
 // textNode.js
 
-import { createNodeComponent, getInitialDataFromFields } from '../factory/createNodeComponent';
+import { createNodeComponent } from '../factory/createNodeComponent';
 import { FIELD_TYPES, NODE_CATEGORIES } from '../nodeSchema';
 import { NODE_ICONS } from '../shared/icons';
 
@@ -21,6 +21,9 @@ const fields = [
 ];
 
 export const TextNode = createNodeComponent({
+  type: 'text',
+  category: NODE_CATEGORIES.UTILITIES,
+  icon: NODE_ICONS.TEXT,
   title: 'Text',
   subtitle: 'Freeform text node with auto-resize and variable suggestions.',
   accent: '#ec4899',
@@ -28,17 +31,4 @@ export const TextNode = createNodeComponent({
   outputs: [{ key: 'output' }],
 });
 
-export const textNodeDefinition = {
-  type: 'text',
-  label: 'Text',
-  category: NODE_CATEGORIES.UTILITIES,
-  icon: NODE_ICONS.TEXT,
-  description: 'Freeform text with custom rendering.',
-  accent: '#ec4899',
-  component: TextNode,
-  getInitialData: (id) => ({
-    id,
-    nodeType: 'text',
-    ...getInitialDataFromFields(fields, { id, data: {} }),
-  }),
-};
+export const textNodeDefinition = TextNode.definition;

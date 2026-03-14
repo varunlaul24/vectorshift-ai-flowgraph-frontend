@@ -1,6 +1,6 @@
 // outputNode.js
 
-import { createNodeComponent, getInitialDataFromFields } from '../factory/createNodeComponent';
+import { createNodeComponent } from '../factory/createNodeComponent';
 import { FIELD_TYPES, NODE_CATEGORIES } from '../nodeSchema';
 import { NODE_ICONS } from '../shared/icons';
 
@@ -31,24 +31,15 @@ const fields = [
 ];
 
 export const OutputNode = createNodeComponent({
+  type: 'customOutput',
+  category: NODE_CATEGORIES.IO,
+  icon: NODE_ICONS.OUTPUT,
   title: 'Output',
   subtitle: 'Collect the final pipeline result.',
+  description: 'Expose a result from the flow.',
   accent: '#22c55e',
   fields,
   inputs: [{ key: 'value' }],
 });
 
-export const outputNodeDefinition = {
-  type: 'customOutput',
-  label: 'Output',
-  category: NODE_CATEGORIES.IO,
-  icon: NODE_ICONS.OUTPUT,
-  description: 'Expose a result from the flow.',
-  accent: '#22c55e',
-  component: OutputNode,
-  getInitialData: (id) => ({
-    id,
-    nodeType: 'customOutput',
-    ...getInitialDataFromFields(fields, { id, data: {} }),
-  }),
-};
+export const outputNodeDefinition = OutputNode.definition;

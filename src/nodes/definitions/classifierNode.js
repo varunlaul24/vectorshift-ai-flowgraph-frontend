@@ -1,4 +1,4 @@
-import { createNodeComponent, getInitialDataFromFields } from '../factory/createNodeComponent';
+import { createNodeComponent } from '../factory/createNodeComponent';
 import { FIELD_TYPES, NODE_CATEGORIES } from '../nodeSchema';
 import { NODE_ICONS } from '../shared/icons';
 
@@ -28,25 +28,16 @@ const fields = [
 ];
 
 export const ClassifierNode = createNodeComponent({
+  type: 'classifier',
+  category: NODE_CATEGORIES.AI,
+  icon: NODE_ICONS.CLASSIFIER,
   title: 'Classifier',
   subtitle: 'Route text into labeled outcomes.',
+  description: 'Branch flow by label confidence.',
   accent: '#8b5cf6',
   fields,
   inputs: [{ key: 'text' }],
   outputs: [{ key: 'match' }, { key: 'fallback' }],
 });
 
-export const classifierNodeDefinition = {
-  type: 'classifier',
-  label: 'Classifier',
-  category: NODE_CATEGORIES.AI,
-  icon: NODE_ICONS.CLASSIFIER,
-  description: 'Branch flow by label confidence.',
-  accent: '#8b5cf6',
-  component: ClassifierNode,
-  getInitialData: (id) => ({
-    id,
-    nodeType: 'classifier',
-    ...getInitialDataFromFields(fields, { id, data: {} }),
-  }),
-};
+export const classifierNodeDefinition = ClassifierNode.definition;
