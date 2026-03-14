@@ -182,6 +182,7 @@ export const createNodeComponent = (config) => {
         title={config.title}
         description={config.description}
         accent={config.accent}
+        icon={config.icon}
         handles={handles}
         style={{ overflow: 'visible' }}
       >

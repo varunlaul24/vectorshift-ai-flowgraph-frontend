@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useStore } from '../../hooks/useStore';
 import { Modal } from './modal';
+import { NODE_ICONS } from '../../nodes/shared/icons';
 import './shared.css';
 
 export const SubmitButton = () => {
@@ -28,15 +29,34 @@ export const SubmitButton = () => {
                 throw new Error('Failed to parse pipeline');
             }
             const data = await response.json();
-            const message = `Pipeline Summary
--------------------
-• Total Nodes: ${data.num_nodes}
-• Total Edges: ${data.num_edges}
-• Structure: ${data.is_dag ? 'Valid DAG' : 'Contains Cycles'}
-
-${data.is_dag 
-    ? 'Your pipeline is valid and ready for execution!' 
-    : 'Please check your connections to ensure there are no infinite loops.'}`;
+            const message = (
+                <div className="submit-modal-content">
+                    <div className="submit-modal-line highlight">
+                        {NODE_ICONS.SUBMIT} Pipeline Summary
+                    </div>
+                    <div className="submit-modal-divider" />
+                    <div className="submit-modal-line">
+                        • Total Nodes: {data.num_nodes}
+                    </div>
+                    <div className="submit-modal-line">
+                        • Total Edges: {data.num_edges}
+                    </div>
+                    <div className="submit-modal-line">
+                        • Structure: {data.is_dag ? (
+                            <><span className="icon-success">{NODE_ICONS.SUCCESS}</span> Valid DAG</>
+                        ) : (
+                            <><span className="icon-error">{NODE_ICONS.ERROR}</span> Contains Cycles</>
+                        )}
+                    </div>
+                    <div className="submit-modal-footer-msg">
+                        {data.is_dag ? (
+                            <><span className="icon-success">{NODE_ICONS.SUCCESS}</span> Your pipeline is valid and ready for execution!</>
+                        ) : (
+                            <><span className="icon-warning">{NODE_ICONS.WARNING}</span> Please check your connections to ensure there are no infinite loops.</>
+                        )}
+                    </div>
+                </div>
+            );
             setModalData({
                 isOpen: true,
                 title: 'Submission Success',
@@ -47,7 +67,7 @@ ${data.is_dag
             setModalData({
                 isOpen: true,
                 title: 'Submission Error',
-                content: 'Connection Error: Could not reach the backend server.'
+                content: `${NODE_ICONS.ERROR} Connection Error: Could not reach the backend server.`
             });
         }
     };

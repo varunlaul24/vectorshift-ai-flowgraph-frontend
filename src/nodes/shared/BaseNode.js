@@ -1,7 +1,7 @@
 import { Handle } from 'reactflow';
 import './BaseNode.css';
 
-export const BaseNode = ({ title, description, accent, handles = [], children, className = '', style = {} }) => {
+export const BaseNode = ({ title, description, accent, icon, handles = [], children, className = '', style = {} }) => {
   return (
     <div
       className={`node-card ${className}`.trim()}
@@ -21,6 +21,7 @@ export const BaseNode = ({ title, description, accent, handles = [], children, c
         />
       ))}
       <div className="node-card__header">
+        {icon && <span className="node-card__icon">{icon}</span>}
         <span className="node-card__title">{title}</span>
       </div>
       {description ? <div className="node-card__description">{description}</div> : null}
