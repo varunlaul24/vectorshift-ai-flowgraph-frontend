@@ -2,7 +2,7 @@
   flex: 1;
   height: 100%;
   position: relative;
-  background-color: var(--blender-bg);
+  background-color: var(--bg-secondary);
 }
 
 .pipeline-canvas .react-flow {
@@ -10,31 +10,63 @@
 }
 
 .react-flow__controls {
-  background: var(--blender-panel-bg);
-  border: 1px solid var(--blender-border);
-  border-radius: 4px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
   overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
 .react-flow__controls-button {
-  background: var(--blender-panel-bg);
-  border-bottom: 1px solid var(--blender-border);
-  color: var(--blender-text);
-  fill: var(--blender-text);
+  background: var(--bg-primary);
+  border: none;
+  border-bottom: 1px solid var(--border-light);
+  color: var(--text-secondary);
+  fill: currentColor;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.react-flow__controls-button:last-child {
+  border-bottom: none;
 }
 
 .react-flow__controls-button:hover {
-  background: var(--blender-hover);
+  background: var(--bg-tertiary);
+  color: var(--accent-primary);
 }
 
 .react-flow__minimap {
-  background: var(--blender-sidebar);
-  border: 1px solid var(--blender-border);
-  border-radius: 4px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
 .react-flow__background {
-  background-color: var(--blender-bg);
+  background-color: var(--bg-secondary);
+}
+
+.react-flow__edge-path {
+  stroke: var(--text-tertiary);
+  stroke-width: 2;
+  transition: stroke 0.2s, stroke-width 0.2s;
+}
+
+.react-flow__edge.selected .react-flow__edge-path {
+  stroke: var(--accent-primary);
+  stroke-width: 3;
+}
+
+.react-flow__handle {
+  width: 8px;
+  height: 8px;
+  background-color: var(--bg-primary);
+  border: 2px solid var(--accent-primary);
+  transition: transform 0.2s;
+}
+
+.react-flow__handle:hover {
+  transform: scale(1.2);
 }
 
 @media (max-width: 768px) {
