@@ -12,6 +12,11 @@ export const useStore = create((set, get) => (
   {
     nodes: [],
     edges: [],
+    isSidebarCollapsed: false,
+
+    setSidebarCollapsed: (isCollapsed) => {
+      set({ isSidebarCollapsed: isCollapsed });
+    },
 
     getNodeID: (type) => {
         const newIDs = {...get().nodeIDs};

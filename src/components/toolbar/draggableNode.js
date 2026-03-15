@@ -1,6 +1,6 @@
 // draggableNode.js
 
-export const DraggableNode = ({ type, label, description, icon, accent }) => {
+export const DraggableNode = ({ type, label, description, icon, accent, onClick }) => {
     const onDragStart = (event, nodeType) => {
       const appData = { nodeType }
       event.target.style.cursor = 'grabbing';
@@ -13,6 +13,7 @@ export const DraggableNode = ({ type, label, description, icon, accent }) => {
         className="blender-node-item"
         onDragStart={(event) => onDragStart(event, type)}
         onDragEnd={(event) => (event.target.style.cursor = 'grab')}
+        onClick={onClick}
         draggable
         title={description}
         style={{ '--node-accent': accent }}

@@ -12,6 +12,23 @@ export const SubmitButton = () => {
     }));
     const closeModal = () => setModalData(prev => ({ ...prev, isOpen: false }));
     const handleSubmit = async () => {
+        if (!nodes || nodes.length < 2 || !edges || edges.length < 1) {
+            setModalData({
+                isOpen: true,
+                title: 'Incomplete Pipeline',
+                content: (
+                    <div className="submit-modal-content">
+                        <div className="submit-modal-line highlight warning-title">
+                            {NODE_ICONS.WARNING} Connection Required
+                        </div>
+                        <div className="submit-modal-description">
+                            A valid pipeline needs at least <b>two nodes</b> and <b>one connection</b> between them to process data.
+                        </div>
+                    </div>
+                )
+            });
+            return;
+        }
         const minimalistNodes = nodes.map(node => ({ id: node.id }));
         const minimalistEdges = edges.map(edge => ({ 
             source: edge.source, 

@@ -140,7 +140,7 @@
 .submit-modal-content {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 8px;
 }
 
 .submit-modal-line {
@@ -149,6 +149,26 @@
     gap: 10px;
     font-size: 14px;
     color: var(--text-primary);
+}
+
+.warning-title {
+    color: #f59e0b !important;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.submit-modal-description {
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.submit-modal-description b {
+    color: var(--text-primary);
+}
+
+.highlight {
+    font-weight: 600;
 }
 
 .submit-modal-line.highlight {
