@@ -5,6 +5,7 @@
 import { useState, useRef, useCallback } from 'react';
 import ReactFlow, { Controls, Background, MiniMap } from 'reactflow';
 import { useStore } from '../../hooks/useStore';
+import { shallow } from 'zustand/shallow';
 import { getInitialNodeData, nodeTypes } from '../../nodes/nodeRegistry';
 import 'reactflow/dist/style.css';
 import './canvas.css';
@@ -12,17 +13,29 @@ import './canvas.css';
 const gridSize = 20;
 const proOptions = { hideAttribution: true };
 
+const selector = (state) => ({
+    nodes: state.nodes,
+    edges: state.edges,
+    getNodeID: state.getNodeID,
+    addNode: state.addNode,
+    onNodesChange: state.onNodesChange,
+    onEdgesChange: state.onEdgesChange,
+    onConnect: state.onConnect,
+});
+
 export const PipelineUI = () => {
     const reactFlowWrapper = useRef(null);
     const [reactFlowInstance, setReactFlowInstance] = useState(null);
     
-    const nodes = useStore(state => state.nodes);
-    const edges = useStore(state => state.edges);
-    const getNodeID = useStore(state => state.getNodeID);
-    const addNode = useStore(state => state.addNode);
-    const onNodesChange = useStore(state => state.onNodesChange);
-    const onEdgesChange = useStore(state => state.onEdgesChange);
-    const onConnect = useStore(state => state.onConnect);
+    const {
+        nodes,
+        edges,
+        getNodeID,
+        addNode,
+        onNodesChange,
+        onEdgesChange,
+        onConnect
+    } = useStore(selector, shallow);
     const isSidebarCollapsed = useStore(state => state.isSidebarCollapsed);
 
     const onDrop = useCallback(

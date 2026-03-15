@@ -1,11 +1,12 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo, useCallback } from 'react';
 import { Position } from 'reactflow';
 import { useStore } from '../../hooks/useStore';
+import { shallow } from 'zustand/shallow';
 import { BaseNode } from '../shared/BaseNode';
 import { FIELD_TYPES } from '../nodeSchema';
 import { useVariableSuggest } from '../../hooks/useVariableSuggest';
 
-const selector = (state) => ({
+const storeSelector = (state) => ({
   updateNodeField: state.updateNodeField,
   isNameUnique: state.isNameUnique,
 });
@@ -133,16 +134,23 @@ const FieldControl = ({ field, value, onChange, nodeId, isInvalid }) => {
 
 export const createNodeComponent = (config) => {
   const Component = function GeneratedNode({ id, data }) {
-    const { updateNodeField, isNameUnique } = useStore(selector);
-    const context = { id, data };
+    const { updateNodeField, isNameUnique } = useStore(storeSelector, shallow);
+    const context = useMemo(() => ({ id, data }), [id, data]);
 
-    const handles = config.getHandles
-      ? config.getHandles(context)
-      : buildNodeHandles({ 
-          id, 
-          inputs: config.inputs || [], 
-          outputs: config.outputs 
-        });
+    const handles = useMemo(() => 
+      config.getHandles
+        ? config.getHandles(context)
+        : buildNodeHandles({ 
+            id, 
+            inputs: config.inputs || [], 
+            outputs: config.outputs 
+          }),
+      [context, id]
+    );
+
+    const onFieldChange = useCallback((key, value) => {
+      updateNodeField(id, key, value);
+    }, [id, updateNodeField]);
 
     const content = config.renderContent ? (
       config.renderContent({
@@ -169,7 +177,7 @@ export const createNodeComponent = (config) => {
                 field={field}
                 value={value}
                 isInvalid={isInvalid}
-                onChange={(event) => updateNodeField(id, field.key, event.target.value)}
+                onChange={(event) => onFieldChange(field.key, event.target.value)}
               />
             </label>
           );

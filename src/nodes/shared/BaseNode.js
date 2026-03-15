@@ -1,7 +1,8 @@
+import React, { memo } from 'react';
 import { Handle } from 'reactflow';
 import './BaseNode.css';
 
-export const BaseNode = ({ title, description, accent, icon, handles = [], children, className = '', style = {} }) => {
+export const BaseNode = memo(({ title, description, accent, icon, handles = [], children, className = '', style = {} }) => {
   return (
     <div
       className={`node-card ${className}`.trim()}
@@ -28,4 +29,4 @@ export const BaseNode = ({ title, description, accent, icon, handles = [], child
       <div className="node-card__body">{children}</div>
     </div>
   );
-};
+});
