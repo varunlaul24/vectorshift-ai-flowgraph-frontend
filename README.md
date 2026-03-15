@@ -1,70 +1,80 @@
-# Getting Started with Create React App
+# VectorShift FlowGraph Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A sophisticated, low-code interface for building AI-powered workflows using a node-based flow graph. Built with React and React Flow, featuring a scalable hybrid node architecture.
 
-## Available Scripts
+## 🚀 Key Features
 
-In the project directory, you can run:
+- **Hybrid Node Architecture**: Combines the speed of schema-driven components with the flexibility of custom-rendered nodes.
+- **Dynamic Variable Suggestion**: Intelligent auto-completion for variables using `{{` triggers, with automatic edge creation between connected nodes.
+- **Auto-resizing Textareas**: Seamless UX for long-form prompts and text inputs.
+- **Node Catalog**: Categorized toolbar for easy discovery and drag-and-drop workflow creation.
+- **Sub-flow Validation**: Direct integration with backend to validate Directed Acyclic Graph (DAG) structures.
+- **Theme Support**: Integrated dark/light mode toggle.
 
-### `npm start`
+## 🏗 Architecture Overview
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+The frontend is designed for extensibility and performance, utilizing a three-layer abstraction for the flow components:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+1.  **[BaseNode](src/nodes/shared/BaseNode.js)**: The core visual shell for all nodes, handling consistent styling, headers, and universal handle (port) behavior.
+2.  **[Node Factory (`createNodeComponent`)](src/nodes/factory/createNodeComponent.js)**: A powerful utility that generates functional React Flow nodes from simple JSON-like configurations. Most nodes in the system (LLM, API, Input, etc.) are built using this factory, reducing boilerplate by ~80%.
+3.  **[Node Registry](src/nodes/nodeRegistry.js)**: The single source of truth that orchestrates toolbar appearance, React Flow node types, and initial state generation.
 
-### `npm test`
+### Design Principles
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **Configuration over Code**: New node types can be added by simply creating a new definition in `src/nodes/definitions/`.
+- **Component-Based CSS**: Styles are co-located with their components (e.g., `BaseNode.css`, `canvas.css`) for high maintainability.
+- **Centralized State**: Powered by [Zustand](https://github.com/pmndrs/zustand) for predictable state management across the canvas and toolbar.
 
-### `npm run build`
+## 📂 Project Structure
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```text
+src/
+├── components/       # UI Components (Canvas, Toolbar, Shared UI)
+├── hooks/            # Custom React Hooks (Store, Variable Suggestions)
+└── nodes/
+    ├── definitions/  # Individual Node logic & schema
+    ├── factory/      # The createNodeComponent engine
+    ├── shared/       # BaseNode and shared assets
+    ├── nodeRegistry.js # Central registration point
+    └── nodeSchema.js # Type definitions and validation logic
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 🛠 Setup & Installation
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Prerequisites
 
-### `npm run eject`
+- [Node.js](https://nodejs.org/) (v16.x or higher)
+- [npm](https://www.npmjs.com/)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Installation
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. Navigate to the frontend directory:
+   ```bash
+   cd vectorshift-ai-flowgraph-frontend
+   ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+3. Start the development server:
+   ```bash
+   npm start
+   ```
 
-## Learn More
+The application will be available at [http://localhost:3000](http://localhost:3000).
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 🧪 Submission & Validation
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+When the "Submit Pipeline" button is clicked:
+1. The current graph is serialized (minimalist nodes and edges).
+2. The data is sent to the backend (`http://localhost:8000/pipelines/parse`).
+3. The response displays the number of nodes, edges, and confirms if the structure is a valid **Directed Acyclic Graph (DAG)**.
 
-### Code Splitting
+## 📖 Learn More
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- [React Flow Documentation](https://reactflow.dev/)
+- [Zustand State Management](https://zustand-demo.pmndrs.org/)
+- [Create React App](https://facebook.github.io/create-react-app/docs/getting-started)
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

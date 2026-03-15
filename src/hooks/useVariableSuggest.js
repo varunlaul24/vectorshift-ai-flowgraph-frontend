@@ -33,7 +33,7 @@ export const useVariableSuggest = (id, fieldKey) => {
     const newVal = event.target.value;
     updateNodeField(id, fieldKey, newVal);
 
-    // Detect "{{"
+    // detect "{{"
     const cursor = event.target.selectionEnd;
     const lastTwo = newVal.slice(Math.max(0, cursor - 2), cursor);
     
@@ -76,13 +76,22 @@ export const useVariableSuggest = (id, fieldKey) => {
     updateNodeField(id, fieldKey, newText);
 
     if (onConnect) {
-      const connection = {
-        source: node.id,
-        sourceHandle: `${node.id}-value`,
-        target: id,
-        targetHandle: `${id}-${fieldKey}`,
-      };
-      onConnect(connection);
+      // duplicate connection handling
+      const alreadyConnected = edges.some(e => 
+        e.source === node.id && 
+        e.target === id && 
+        e.targetHandle === `${id}-${fieldKey}`
+      );
+      
+      if (!alreadyConnected) {
+        const connection = {
+          source: node.id,
+          sourceHandle: `${node.id}-value`,
+          target: id,
+          targetHandle: `${id}-${fieldKey}`,
+        };
+        onConnect(connection);
+      }
     }
 
     setShowPopup(false);

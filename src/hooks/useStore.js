@@ -33,6 +33,20 @@ export const useStore = create((set, get) => (
       set({
         nodes: applyNodeChanges(changes, get().nodes),
       });
+      
+      // Cleanup edges on nodee removal
+      const removedNodeIds = changes
+        .filter(change => change.type === 'remove')
+        .map(change => change.id);
+      
+      if (removedNodeIds.length > 0) {
+        set({
+          edges: get().edges.filter(edge => 
+            !removedNodeIds.includes(edge.source) && 
+            !removedNodeIds.includes(edge.target)
+          )
+        });
+      }
     },
 
     onEdgesChange: (changes) => {

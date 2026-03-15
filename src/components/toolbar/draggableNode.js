@@ -15,8 +15,9 @@ export const DraggableNode = ({ type, label, description, icon, accent }) => {
         onDragEnd={(event) => (event.target.style.cursor = 'grab')}
         draggable
         title={description}
+        style={{ '--node-accent': accent }}
       >
-          <div className="blender-node-item__icon" style={{ borderColor: accent }}>
+          <div className="blender-node-item__icon">
             {icon}
           </div>
           <span className="blender-node-item__label">{label}</span>

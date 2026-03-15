@@ -34,7 +34,6 @@ export const SubmitButton = () => {
                     <div className="submit-modal-line highlight">
                         {NODE_ICONS.SUBMIT} Pipeline Summary
                     </div>
-                    <div className="submit-modal-divider" />
                     <div className="submit-modal-line">
                         • Total Nodes: {data.num_nodes}
                     </div>
