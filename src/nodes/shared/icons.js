@@ -1,8 +1,3 @@
-/*
-    Central repository for node icons as SVG components.
-*/
-import React from 'react';
-
 const IconWrapper = ({ children, color = "currentColor" }) => (
   <svg 
     width="18" 

@@ -1,8 +1,3 @@
-/*
-    Defines the technical shapes and metadata types for the node system. 
-    This formalizes what properties are required or optional for node definitions.
-*/
-
 export const FIELD_TYPES = {
   TEXT: 'text',
   SELECT: 'select',
